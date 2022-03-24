@@ -16,9 +16,29 @@ import LockIcon from "@mui/icons-material/Lock";
 import { useNavigate } from "react-router-dom";
 // import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useForm, Controller } from "react-hook-form";
 
 function SignUp() {
   const navigate = useNavigate();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      fname: "",
+      lname: "",
+      email: "",
+      phone: "",
+      password: "",
+      cpassword: "",
+    },
+  });
+
+  const onSubmit = (data) => {
+    console.log({ data });
+  };
 
   return (
     <Grid container xs={12} alignItems="center" sx={{ position: "relative" }}>
@@ -130,171 +150,242 @@ function SignUp() {
               Enter your personal details and start journey with us.
             </Typography>
           </Box>
-          <Box mt="39px">
-            <Box>
-              <InputLabel
-                htmlFor="fname"
-                sx={{
-                  fontSize: "15px",
-                  lineHeight: "23px",
-                  opacity: "0.55",
-                  color: "#000000",
-                }}
-              >
-                FIRST NAME
-              </InputLabel>
-              <FormControl variant="standard" fullWidth>
-                <Input
-                  id="fname"
-                  type="text"
-                  endAdornment={
-                    <InputAdornment>
-                      <PersonOutlineIcon />
-                    </InputAdornment>
-                  }
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Box mt="39px">
+              <Box>
+                <InputLabel
+                  htmlFor="fname"
+                  sx={{
+                    fontSize: "15px",
+                    lineHeight: "23px",
+                    opacity: "0.55",
+                    color: "#000000",
+                  }}
+                >
+                  FIRST NAME
+                </InputLabel>
+                <Controller
+                  name="fname"
+                  control={control}
+                  rules={{
+                    required: { value: true, message: "This is Required" },
+                  }}
+                  render={({ field }) => (
+                    <FormControl variant="standard" fullWidth>
+                      <Input
+                        id="fname"
+                        type="text"
+                        error={errors?.fname}
+                        {...field}
+                        endAdornment={
+                          <InputAdornment>
+                            <PersonOutlineIcon />
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
+                  )}
                 />
-              </FormControl>
-            </Box>
-            <Box mt="28px">
-              <InputLabel
-                htmlFor="lname"
-                sx={{
-                  fontSize: "15px",
-                  lineHeight: "23px",
-                  opacity: "0.55",
-                  color: "#000000",
-                }}
-              >
-                LAST NAME
-              </InputLabel>
-              <FormControl variant="standard" fullWidth>
-                <Input
-                  id="lname"
-                  type="text"
-                  endAdornment={
-                    <InputAdornment>
-                      <PersonOutlineIcon />
-                    </InputAdornment>
-                  }
+              </Box>
+              <Box mt="28px">
+                <InputLabel
+                  htmlFor="lname"
+                  sx={{
+                    fontSize: "15px",
+                    lineHeight: "23px",
+                    opacity: "0.55",
+                    color: "#000000",
+                  }}
+                >
+                  LAST NAME
+                </InputLabel>
+                <Controller
+                  name="lname"
+                  control={control}
+                  rules={{
+                    required: { value: true, message: "This is Required" },
+                  }}
+                  render={({ field }) => (
+                    <FormControl variant="standard" fullWidth>
+                      <Input
+                        id="lname"
+                        type="text"
+                        error={errors?.lname}
+                        {...field}
+                        endAdornment={
+                          <InputAdornment>
+                            <PersonOutlineIcon />
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
+                  )}
                 />
-              </FormControl>
-            </Box>
-            <Box mt="28px">
-              <InputLabel
-                htmlFor="email"
-                sx={{
-                  fontSize: "15px",
-                  lineHeight: "23px",
-                  opacity: "0.55",
-                  color: "#000000",
-                }}
-              >
-                EMAIL ID
-              </InputLabel>
-              <FormControl variant="standard" fullWidth>
-                <Input
-                  id="email"
-                  type="email"
-                  endAdornment={
-                    <InputAdornment>
-                      <MailIcon />
-                    </InputAdornment>
-                  }
+              </Box>
+              <Box mt="28px">
+                <InputLabel
+                  htmlFor="email"
+                  sx={{
+                    fontSize: "15px",
+                    lineHeight: "23px",
+                    opacity: "0.55",
+                    color: "#000000",
+                  }}
+                >
+                  EMAIL ID
+                </InputLabel>
+                <Controller
+                  name="email"
+                  control={control}
+                  rules={{
+                    required: { value: true, message: "This is Required" },
+                  }}
+                  render={({ field }) => (
+                    <FormControl variant="standard" fullWidth>
+                      <Input
+                        id="email"
+                        type="email"
+                        {...field}
+                        error={errors?.email}
+                        endAdornment={
+                          <InputAdornment>
+                            <MailIcon />
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
+                  )}
                 />
-              </FormControl>
-            </Box>
-            <Box mt="28px">
-              <InputLabel
-                htmlFor="phone"
-                sx={{
-                  fontSize: "15px",
-                  lineHeight: "23px",
-                  opacity: "0.55",
-                  color: "#000000",
-                }}
-              >
-                MOBILE NUMBER
-              </InputLabel>
-              <FormControl variant="standard" fullWidth>
-                <Input
-                  id="phone"
-                  type="tel"
-                  endAdornment={
-                    <InputAdornment>
-                      <PhoneAndroidIcon />
-                    </InputAdornment>
-                  }
+              </Box>
+              <Box mt="28px">
+                <InputLabel
+                  htmlFor="phone"
+                  sx={{
+                    fontSize: "15px",
+                    lineHeight: "23px",
+                    opacity: "0.55",
+                    color: "#000000",
+                  }}
+                >
+                  MOBILE NUMBER
+                </InputLabel>
+                <Controller
+                  name="phone"
+                  control={control}
+                  rules={{
+                    required: { value: true, message: "This is Required" },
+                  }}
+                  render={({ field }) => (
+                    <FormControl variant="standard" fullWidth>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        error={errors?.phone}
+                        {...field}
+                        endAdornment={
+                          <InputAdornment>
+                            <PhoneAndroidIcon />
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
+                  )}
                 />
-              </FormControl>
-            </Box>
-            <Box mt="28px">
-              <InputLabel
-                htmlFor="password"
-                sx={{
-                  fontSize: "15px",
-                  lineHeight: "23px",
-                  opacity: "0.55",
-                  color: "#000000",
-                }}
-              >
-                PASSWORD
-              </InputLabel>
-              <FormControl variant="standard" fullWidth>
-                <Input
-                  id="password"
-                  type="password"
-                  endAdornment={
-                    <InputAdornment>
-                      <LockIcon />
-                    </InputAdornment>
-                  }
+              </Box>
+              <Box mt="28px">
+                <InputLabel
+                  htmlFor="password"
+                  sx={{
+                    fontSize: "15px",
+                    lineHeight: "23px",
+                    opacity: "0.55",
+                    color: "#000000",
+                  }}
+                >
+                  PASSWORD
+                </InputLabel>
+                <Controller
+                  name="password"
+                  control={control}
+                  rules={{
+                    required: { value: true, message: "This is Required" },
+                  }}
+                  render={({ field }) => (
+                    <FormControl variant="standard" fullWidth>
+                      <Input
+                        id="password"
+                        type="password"
+                        error={errors?.password}
+                        {...field}
+                        endAdornment={
+                          <InputAdornment>
+                            <LockIcon />
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
+                  )}
                 />
-              </FormControl>
-            </Box>
-            <Box mt="28px">
-              <InputLabel
-                htmlFor="cpassword"
-                sx={{
-                  fontSize: "15px",
-                  lineHeight: "23px",
-                  opacity: "0.55",
-                  color: "#000000",
-                }}
-              >
-                CONFIRM PASSWORD
-              </InputLabel>
-              <FormControl variant="standard" fullWidth>
-                <Input
-                  id="cpassword"
-                  type="password"
-                  endAdornment={
-                    <InputAdornment>
-                      <VisibilityOffIcon />
-                    </InputAdornment>
-                  }
+              </Box>
+              <Box mt="28px">
+                <InputLabel
+                  htmlFor="cpassword"
+                  sx={{
+                    fontSize: "15px",
+                    lineHeight: "23px",
+                    opacity: "0.55",
+                    color: "#000000",
+                  }}
+                >
+                  CONFIRM PASSWORD
+                </InputLabel>
+                <Controller
+                  name="cpassword"
+                  control={control}
+                  rules={{
+                    required: { value: true, message: "This is Required" },
+                    minLength: { value: 8, message: "Minimum Length 8" },
+                    // validate: { va:(value) => value === getValues("password")},
+                  }}
+                  render={({ field }) => (
+                    <FormControl variant="standard" fullWidth>
+                      <Input
+                        id="cpassword"
+                        type="password"
+                        error={errors?.cpassword}
+                        {...field}
+                        endAdornment={
+                          <InputAdornment>
+                            <VisibilityOffIcon />
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
+                  )}
                 />
-              </FormControl>
+              </Box>
             </Box>
-          </Box>
-          <Button
-            fullWidth
-            sx={{
-              height: "50px",
-              background: "#081930",
-              color: "#FFFFFF",
-              fontSize: "20px",
-              lineHeight: "30px",
-              marginTop: "46px",
-              marginBottom: "56px",
-              boxShadow: "0px 0px 20px #08193080",
-              borderRadius: "71px",
-              "&:hover": {
+            <Button
+              fullWidth
+              sx={{
+                height: "50px",
                 background: "#081930",
-              },
-            }}
-          >
-            SIGN UP
-          </Button>
+                color: "#FFFFFF",
+                fontSize: "20px",
+                lineHeight: "30px",
+                marginTop: "46px",
+                marginBottom: "56px",
+                boxShadow: "0px 0px 20px #08193080",
+                borderRadius: "71px",
+                "&:hover": {
+                  background: "#081930",
+                },
+              }}
+              type="submit"
+            >
+              SIGN UP
+            </Button>
+          </form>
         </Box>
       </Grid>
       <div

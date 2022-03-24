@@ -15,13 +15,40 @@ import InputAdornment from "@mui/material/InputAdornment";
 import MailIcon from "@mui/icons-material/MailOutline";
 import LockIcon from "@mui/icons-material/Lock";
 import { useNavigate } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
+import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
 
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (formData) => {
+    const data = await axios.post(
+      "https://cogentmind.tech/PayVenue/api/payvenue/v1/login/",
+      { EmailId: formData.email, password: formData.password },
+      {
+        "Access-Control-Allow-Origin": "*",
+        "Content-type": "application/json;charset=utf-8",
+        Authorization: "Bearer ecCIpsMXYix7R0JDFl1DiNYRmJSdvcZiPkN",
+      }
+    );
+    console.log({ data });
+  };
+
   return (
     <Grid
       container
+      item
       xs={12}
       alignItems="center"
       height="100vh"
@@ -143,91 +170,122 @@ function Login() {
             </Typography>
           </Box>
           <Box mt="62px">
-            <Box>
-              <InputLabel
-                htmlFor="email"
-                sx={{
-                  fontSize: "15px",
-                  lineHeight: "23px",
-                  opacity: "0.55",
-                  color: "#000000",
-                }}
-              >
-                Email
-              </InputLabel>
-              <FormControl variant="standard" fullWidth>
-                <Input
-                  id="email"
-                  type="email"
-                  endAdornment={
-                    <InputAdornment>
-                      <MailIcon />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-            </Box>
-            <Box mt="50px">
-              <InputLabel
-                htmlFor="email"
-                sx={{
-                  fontSize: "15px",
-                  lineHeight: "23px",
-                  opacity: "0.55",
-                  color: "#000000",
-                }}
-              >
-                Password
-              </InputLabel>
-              <FormControl variant="standard" fullWidth>
-                <Input
-                  id="password"
-                  type="password"
-                  endAdornment={
-                    <InputAdornment>
-                      <LockIcon />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-            </Box>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              mt="29px"
-              alignItems="center"
-            >
-              <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox defaultChecked />}
-                  label="Keep me logged in"
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Box>
+                <InputLabel
+                  htmlFor="email"
                   sx={{
-                    fontSize: "17px",
-                    lineHeight: "26px",
+                    fontSize: "15px",
+                    lineHeight: "23px",
+                    opacity: "0.55",
+                    color: "#000000",
                   }}
+                >
+                  Email{" "}
+                  <span style={{ color: "red", fontSize: "12px" }}>
+                    {errors?.email && errors?.email?.message}
+                  </span>
+                </InputLabel>
+                <Controller
+                  name="email"
+                  control={control}
+                  rules={{
+                    required: { value: true, message: "This is Required" },
+                  }}
+                  render={({ field }) => (
+                    <FormControl variant="standard" fullWidth>
+                      <Input
+                        id="email"
+                        type="email"
+                        error={errors?.email}
+                        {...field}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <MailIcon />
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
+                  )}
                 />
-              </FormGroup>
-              <Typography>Forgot Password ?</Typography>
-            </Box>
+              </Box>
+              <Box mt="50px">
+                <InputLabel
+                  htmlFor="email"
+                  sx={{
+                    fontSize: "15px",
+                    lineHeight: "23px",
+                    opacity: "0.55",
+                    color: "#000000",
+                  }}
+                >
+                  Password{" "}
+                  <span style={{ color: "red", fontSize: "12px" }}>
+                    {errors?.password && errors?.password?.message}
+                  </span>
+                </InputLabel>
+                <Controller
+                  name="password"
+                  control={control}
+                  rules={{
+                    required: { value: true, message: "This is Required" },
+                  }}
+                  render={({ field }) => (
+                    <FormControl variant="standard" fullWidth>
+                      <Input
+                        id="password"
+                        type="password"
+                        error={errors?.password}
+                        {...field}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <LockIcon />
+                          </InputAdornment>
+                        }
+                      />
+                    </FormControl>
+                  )}
+                />
+              </Box>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                mt="29px"
+                alignItems="center"
+              >
+                <FormGroup>
+                  <FormControlLabel
+                    control={<Checkbox defaultChecked />}
+                    label="Keep me logged in"
+                    sx={{
+                      fontSize: "17px",
+                      lineHeight: "26px",
+                    }}
+                  />
+                </FormGroup>
+                <Typography>Forgot Password ?</Typography>
+              </Box>
+              <Button
+                fullWidth
+                sx={{
+                  height: "50px",
+                  background: "#081930",
+                  color: "#FFFFFF",
+                  fontSize: "20px",
+                  lineHeight: "30px",
+                  marginTop: "82px",
+                  boxShadow: "0px 0px 20px #08193080",
+                  borderRadius: "71px",
+                  "&:hover": {
+                    background: "#081930",
+                  },
+                }}
+                type="submit"
+              >
+                LOG IN
+              </Button>
+            </form>
           </Box>
-          <Button
-            fullWidth
-            sx={{
-              height: "50px",
-              background: "#081930",
-              color: "#FFFFFF",
-              fontSize: "20px",
-              lineHeight: "30px",
-              marginTop: "82px",
-              boxShadow: "0px 0px 20px #08193080",
-              borderRadius: "71px",
-              "&:hover": {
-                background: "#081930",
-              },
-            }}
-          >
-            LOG IN
-          </Button>
         </Box>
       </Grid>
       <div
