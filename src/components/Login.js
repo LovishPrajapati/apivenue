@@ -14,8 +14,11 @@ import { Box } from "@mui/system";
 import InputAdornment from "@mui/material/InputAdornment";
 import MailIcon from "@mui/icons-material/MailOutline";
 import LockIcon from "@mui/icons-material/Lock";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+
   return (
     <Grid
       container
@@ -86,6 +89,7 @@ function Login() {
                   color: "#081930",
                 },
               }}
+              onClick={() => navigate("/signup")}
             >
               SIGN UP
             </Button>
@@ -177,7 +181,7 @@ function Login() {
               </InputLabel>
               <FormControl variant="standard" fullWidth>
                 <Input
-                  id="email"
+                  id="password"
                   type="password"
                   endAdornment={
                     <InputAdornment>
@@ -187,20 +191,24 @@ function Login() {
                 />
               </FormControl>
             </Box>
-            <FormGroup
-              sx={{
-                mt: "29px",
-              }}
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              mt="29px"
+              alignItems="center"
             >
-              <FormControlLabel
-                control={<Checkbox defaultChecked />}
-                label="Keep me logged in"
-                sx={{
-                  fontSize: "17px",
-                  lineHeight: "26px",
-                }}
-              />
-            </FormGroup>
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox defaultChecked />}
+                  label="Keep me logged in"
+                  sx={{
+                    fontSize: "17px",
+                    lineHeight: "26px",
+                  }}
+                />
+              </FormGroup>
+              <Typography>Forgot Password ?</Typography>
+            </Box>
           </Box>
           <Button
             fullWidth
