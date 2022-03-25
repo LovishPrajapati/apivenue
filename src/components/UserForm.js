@@ -516,48 +516,51 @@ function UserForm(props) {
                     </Grid>
                   </Grid>
                 </Box>
-
-                <hr />
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    margin: "22px 28px",
-                  }}
-                >
-                  <Button
-                    sx={{
-                      width: "110px",
-                      height: "43px",
-                      background: "#081930",
-                      borderRadius: "22px",
-                      color: "#FFFFFF",
-                      fontSize: "14px",
-                      lineHeight: "19px",
-                    }}
-                    type="submit"
-                  >
-                    Submit
-                  </Button>
-                  <Button
-                    sx={{
-                      width: "110px",
-                      height: "43px",
-                      backgroundColor: "#081930",
-                      borderRadius: "22px",
-                      opacity: 0.2,
-                    }}
-                  >
-                    <Typography
+                {!props?.view && (
+                  <>
+                    <hr />
+                    <Box
                       sx={{
-                        color: "#081930",
-                        opacity: 1,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        margin: "22px 28px",
                       }}
                     >
-                      Cancel
-                    </Typography>
-                  </Button>
-                </Box>
+                      <Button
+                        sx={{
+                          width: "110px",
+                          height: "43px",
+                          background: "#081930",
+                          borderRadius: "22px",
+                          color: "#FFFFFF",
+                          fontSize: "14px",
+                          lineHeight: "19px",
+                        }}
+                        type="submit"
+                      >
+                        Submit
+                      </Button>
+                      <Button
+                        sx={{
+                          width: "110px",
+                          height: "43px",
+                          backgroundColor: "#081930",
+                          borderRadius: "22px",
+                          opacity: 0.2,
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: "#081930",
+                            opacity: 1,
+                          }}
+                        >
+                          Cancel
+                        </Typography>
+                      </Button>
+                    </Box>
+                  </>
+                )}
               </form>
             </Box>
           </Grid>
