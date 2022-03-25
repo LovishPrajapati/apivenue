@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoadinScreen from "./LoadingScreen";
 import {
   Button,
   Grid,
+  Switch,
   Table,
   TableBody,
   TableCell,
@@ -13,7 +14,10 @@ import {
   Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import ViewIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import { Box } from "@mui/system";
+import DeleteIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 function MerchantList() {
   const [loading, setLoading] = useState(true);
@@ -42,6 +46,23 @@ function MerchantList() {
       });
   }, [navigate]);
 
+  const deleteRecord = (id) => {
+    const config = {
+      method: "delete",
+      url: `https://cogentmind.tech/PayVenue/api/payvenue/v1/delete_user/${id}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
+    };
+    axios(config)
+      .then((response) => {
+        alert(response?.data?.message);
+        window.location.reload();
+      })
+      .catch((err) => console.log(err.response.data.message));
+  };
+
   return (
     <>
       {loading ? (
@@ -65,7 +86,6 @@ function MerchantList() {
                 <Grid item container xs={6} justifyContent="flex-end">
                   <Button
                     sx={{
-                      //   width: "137px",
                       height: "35px",
                       borderRadius: "18px",
                       background: "#FFB53F",
@@ -73,6 +93,7 @@ function MerchantList() {
                       fontSize: "15px",
                       lineHeight: "20px",
                     }}
+                    onClick={() => navigate("/add-user")}
                   >
                     <AddIcon size="small" />
                     Add Member
@@ -118,7 +139,9 @@ function MerchantList() {
                         </TableCell>
                         <TableCell>{item?.PhoneNo}</TableCell>
                         <TableCell>{item?.EmailId}</TableCell>
-                        <TableCell>{item?.status}</TableCell>
+                        <TableCell>
+                          <Switch checked={+item?.status} />
+                        </TableCell>
                         <TableCell>
                           <Box display="flex">
                             <Box
@@ -126,35 +149,57 @@ function MerchantList() {
                               height="30px"
                               borderRadius="100%"
                               mr="4px"
-                              sx={{ background: "#0387FB" }}
+                              sx={{
+                                background: "#0387FB",
+                                "&:hover": {
+                                  cursor: "pointer",
+                                },
+                              }}
                               display="flex"
                               alignItems="center"
                               justifyContent="center"
+                              color="#fff"
                             >
-                              <AddIcon />
+                              <EditIcon fontSize="10px" />
                             </Box>
                             <Box
                               width="30px"
                               height="30px"
                               borderRadius="100%"
                               mr="4px"
-                              sx={{ background: "#0387FB" }}
+                              sx={{
+                                background: "#004CB2",
+                                "&:hover": {
+                                  cursor: "pointer",
+                                },
+                              }}
                               display="flex"
                               alignItems="center"
                               justifyContent="center"
+                              color="#fff"
                             >
-                              <AddIcon />
+                              <Link to="/view-user" state={item}>
+                                {console.log(item)}
+                                <ViewIcon fontSize="10px" />
+                              </Link>
                             </Box>
                             <Box
                               width="30px"
                               height="30px"
                               borderRadius="100%"
-                              sx={{ background: "#0387FB" }}
+                              sx={{
+                                background: "#B50404",
+                                "&:hover": {
+                                  cursor: "pointer",
+                                },
+                              }}
                               display="flex"
                               alignItems="center"
                               justifyContent="center"
+                              color="#fff"
+                              onClick={() => deleteRecord(item?.id)}
                             >
-                              <AddIcon />
+                              <DeleteIcon fontSize="10px" />
                             </Box>
                           </Box>
                         </TableCell>
