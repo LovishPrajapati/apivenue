@@ -158,9 +158,14 @@ function MerchantList() {
                               display="flex"
                               alignItems="center"
                               justifyContent="center"
-                              color="#fff"
                             >
-                              <EditIcon fontSize="10px" />
+                              <Link
+                                to="/update-user"
+                                state={item}
+                                style={{ color: "#fff" }}
+                              >
+                                <EditIcon fontSize="10px" />
+                              </Link>
                             </Box>
                             <Box
                               width="30px"
@@ -176,10 +181,12 @@ function MerchantList() {
                               display="flex"
                               alignItems="center"
                               justifyContent="center"
-                              color="#fff"
                             >
-                              <Link to="/view-user" state={item}>
-                                {console.log(item)}
+                              <Link
+                                to="/view-user"
+                                state={item}
+                                style={{ color: "#fff" }}
+                              >
                                 <ViewIcon fontSize="10px" />
                               </Link>
                             </Box>
